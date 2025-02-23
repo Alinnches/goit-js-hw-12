@@ -7,81 +7,51 @@ import '/css/izitoast.css';
 import iconNoResults from '../img/error-icon.svg';
 
 const gallery = document.querySelector('.gallery');
-const loader = document.querySelector('.loader')
+const loader = document.querySelector('.loader');
+let lightbox = new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
 
 export function renderImages(images) {
   const galleryHtml = images
-    .map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => `
-          <li class="gallery-item">
-            <a class="gallery-link" href="${largeImageURL}">
-              <figure class="thumb-container">
-                <img
-                  class="thumb-image"
-                  src="${webformatURL}"
-                  data-source="${largeImageURL}"
-                  alt="${tags}"
-                />
-
-                <figcaption class="thumb-data">
-                  <dl class="thumb-data-list">
-                    <div class="thumb-data-item">
-                      <dt class="thumb-data-title">Likes</dt>
-                      <dd class="thumb-data-data">${likes}</dd>
-                    </div>
-                    <div class="thumb-data-item">
-                      <dt class="thumb-data-title">Views</dt>
-                      <dd class="thumb-data-data">${views}</dd>
-                    </div>
-                    <div class="thumb-data-item">
-                      <dt class="thumb-data-title">Comments</dt>
-                      <dd class="thumb-data-data">${comments}</dd>
-                    </div>
-                    <div class="thumb-data-item">
-                      <dt class="thumb-data-title">Downloads</dt>
-                      <dd class="thumb-data-data">${downloads}</dd>
-                    </div>
-                  </dl>
-                </figcaption>
-              </figure>
-            </a>
-          </li>
-        `
+    .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => 
+      `<li class="gallery-item">
+        <a class="gallery-link" href="${largeImageURL}">
+          <figure class="thumb-container">
+            <img class="thumb-image" src="${webformatURL}" alt="${tags}" />
+            <figcaption class="thumb-data">
+              <dl class="thumb-data-list">
+                <div class="thumb-data-item">
+                  <dt>Likes</dt><dd>${likes}</dd>
+                </div>
+                <div class="thumb-data-item">
+                  <dt>Views</dt><dd>${views}</dd>
+                </div>
+                <div class="thumb-data-item">
+                  <dt>Comments</dt><dd>${comments}</dd>
+                </div>
+                <div class="thumb-data-item">
+                  <dt>Downloads</dt><dd>${downloads}</dd>
+                </div>
+              </dl>
+            </figcaption>
+          </figure>
+        </a>
+      </li>`
     )
     .join('');
 
-    gallery.innerHTML = galleryHtml;
-    
-    if (images.length) {
-        lightbox.refresh();
-    }
-  hideLoader()
+  gallery.insertAdjacentHTML('beforeend', galleryHtml);
+  lightbox.refresh();
 }
 
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
-
-export function showLoader(){
-  gallery.classList.add('hidden')
-  loader.classList.remove('hidden')
+export function showLoader() {
+  loader.classList.remove('hidden');
 }
 
-export function hideLoader(){
-  gallery.classList.remove('hidden')
-  loader.classList.add('hidden')
+export function hideLoader() {
+  loader.classList.add('hidden');
 }
 
-export function showMessage() {
+export function showMessage(message) {
   iziToast.show({
     position: 'topRight',
     message:
