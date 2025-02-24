@@ -15,10 +15,6 @@ ul {
   padding: 0;
 }
 
-button {
-  all: unset;
-}
-
 body {
   padding-block: 36px;
   font-family: 'Montserrat', sans-serif;
@@ -56,6 +52,7 @@ form input:focus {
 
 form button {
   border-radius: 8px;
+  border: none;
   padding: 8px 16px;
   width: 75px;
   background-color: #4e75ff;
@@ -186,7 +183,7 @@ ul {
   padding: 8px 16px;
   font-size: 16px;
   color: white;
-  border-color: #4e75ff;
+  background-color: #4e75ff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
